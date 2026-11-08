@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#111827">
+<title>100-Day Fitness Tracker</title>
+<link rel="manifest" href="manifest.webmanifest">
+<style>
+:root{--bg:#f3f4f6;--card:#fff;--ink:#172033;--muted:#64748b;--accent:#16734a;--line:#e5e7eb}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px system-ui,-apple-system,Segoe UI,sans-serif}
+header{background:#111827;color:#fff;padding:24px 18px 20px}header h1{font-size:25px;margin:0 0 5px}header p{margin:0;color:#cbd5e1}
+main{max-width:760px;margin:auto;padding:14px}.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin:12px 0;box-shadow:0 2px 8px #0f172a0a}
+h2{font-size:19px;margin:0 0 12px}.muted,small{color:var(--muted)}.days{display:flex;gap:7px;overflow:auto;padding-bottom:5px}
+.days button,.btn{border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px 13px;font-weight:650;white-space:nowrap}
+.days button.active{background:#e4f4eb;border-color:#27845a;color:#17633e}
+.progress{height:10px;background:#e5e7eb;border-radius:99px;overflow:hidden}.progress span{display:block;height:100%;background:#218653;width:0}
+.task{display:flex;gap:11px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--line)}.task:last-child{border:0}
+input[type=checkbox]{width:21px;height:21px;accent-color:#16804f;flex-shrink:0;margin-top:1px}
+.task strong{display:block}.task small{display:block;margin-top:2px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.grid label{font-size:13px;color:var(--muted)}input[type=text],input[type=number],input[type=date],textarea{width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:9px;margin-top:5px;font:inherit;background:#fff;color:var(--ink)}
+button{cursor:pointer}.btn.primary{background:#176b46;color:#fff;border-color:#176b46}.btn.danger{color:#b91c1c}
+table{width:100%;border-collapse:collapse;font-size:14px}td,th{padding:9px 6px;border-bottom:1px solid var(--line);text-align:left}th{color:var(--muted)}
+details{border-top:1px solid var(--line);padding:11px 0}summary{font-weight:650;cursor:pointer}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}
+@media(max-width:420px){.grid{grid-template-columns:1fr 1fr}header h1{font-size:22px}}
+</style>
+</head>
+<body>
+<header><h1>100-Day Fitness Tracker</h1><p>Phase 1 · Week 1 · Coach Akash's program</p></header>
+<main>
+<section class="card">
+<h2>Week 1 progress</h2>
+<div id="progressText" class="muted">0 of 28 daily checks complete</div>
+<div class="progress" style="margin-top:10px"><span id="progressBar"></span></div>
+<p class="muted" id="daySummary">Select a day to track your checklist.</p>
+<div class="days" id="days"></div>
+</section>
+<section class="card">
+<h2 id="checkTitle">Day 1 checklist</h2>
+<div id="checks"></div>
+</section>
+<section class="card">
+<h2>Day 1 baseline measurements</h2>
+<p class="muted">Record once before starting. Measurements are stored only in this browser on this device.</p>
+<div class="grid">
+<label>Date<input id="baseDate" type="date"></label>
+<label>Weight (kg)<input id="weight" type="number" step="0.1" placeholder="88"></label>
+<label>Chest (in)<input id="chest" type="number" step="0.1"></label>
+<label>Waist (in)<input id="waist" type="number" step="0.1"></label>
+<label>Hips (in)<input id="hips" type="number" step="0.1"></label>
+<label>Arms (in)<input id="arms" type="number" step="0.1"></label>
+</div>
+<p><button class="btn primary" id="saveBase">Save baseline</button> <span id="baseStatus" class="muted"></span></p>
+</section>
+<section class="card">
+<h2>Phase 1 quick reference</h2>
+<details open><summary>Workout · Days 1–6 (same full-body workout)</summary>
+<table><tr><th>Exercise</th><th>Sets</th><th>Reps</th></tr>
+<tr><td>Incline Dumbbell Press</td><td>3</td><td>12–15</td></tr>
+<tr><td>Pec Deck Fly</td><td>3</td><td>12–15</td></tr>
+<tr><td>Lat Pulldown</td><td>3</td><td>12–15</td></tr>
+<tr><td>Face Pulls</td><td>3</td><td>15–20</td></tr>
+<tr><td>Leg Extension</td><td>3</td><td>12–15</td></tr>
+<tr><td>Leg Curl</td><td>3</td><td>12–15</td></tr>
+<tr><td>Calf Raises</td><td>3</td><td>15–20</td></tr>
+<tr><td>Lateral Delt Raises</td><td>3</td><td>12–15</td></tr>
+<tr><td>Plank</td><td>3</td><td>30–60 sec</td></tr>
+<tr><td>Cardio</td><td>1</td><td>10–15 min, moderate</td></tr></table>
+<p class="muted">Rest 60–90 seconds between sets. Use light-to-moderate weights, controlled reps and good form. Do not add exercises. Day 7 is rest.</p></details>
+<details><summary>Nutrition · 7 days</summary>
+<p><b>Avoid:</b> added sugar/sweets, sugary drinks, junk food, maida products and alcohol.</p>
+<p><b>Choose home-cooked foods:</b> eggs, chicken, fish, paneer, dal, curd, milk; roti, rice, oats, poha, upma, sweet potato; vegetables; ghee, nuts, seeds, coconut; fresh fruit (limit 2/day).</p>
+<p><b>Water:</b> minimum 3 litres/day. The Phase 1 PDF does not prescribe calories, macros, portion sizes or meal timings.</p></details>
+<details><summary>Supplements · optional</summary>
+<p>The PDF lists whey 1 scoop (25–30 g) post-workout, creatine monohydrate 5 g post-workout, multivitamin with breakfast, fish oil 1000 mg with breakfast, and D3 + K2 (5000 IU D3) with a meal. Supplements are optional in Phase 1; check suitability and dosage with a clinician/pharmacist, especially for vitamin D and existing medicines.</p>
+<p>Avoid spending on fat burners, testosterone boosters, unnecessary pre-workouts, BCAAs if protein intake is adequate, and mass gainers.</p></details>
+<details><summary>Warm-up and cool-down</summary>
+<p>Use the warm-up/cool-down routine document as a movement reference. It gives push, pull and leg warm-ups and stretches; Phase 1's workout plan itself is the same full-body routine each of Days 1–6. Warm up before training; cool down after training.</p></details>
+</section>
+<section class="card">
+<h2>Backup & privacy</h2>
+<p class="muted">Your entries are saved in this browser on this device. Use Export backup regularly. Do not clear browser storage unless you have exported a backup. Photos are not uploaded by this tracker.</p>
+<button class="btn" id="export">Export backup</button>
+<label class="btn" style="display:inline-block">Import backup<input id="import" type="file" accept="application/json" hidden></label>
+<button class="btn danger" id="reset">Reset tracker</button>
+</section>
+</main>
+<footer>Personal tracker · Phase 1 only · Phase 2 content is not included until provided.</footer>
+<script>
+const KEY='fitness100day_phase1_v1';
+const tasks=[
+ ['Workout completed','Days 1–6: same full-body workout; Day 7: rest'],
+ ['Ate clean','Avoid sugar, sugary drinks, junk, maida and alcohol'],
+ ['Progress photo taken','Same pose and lighting each day'],
+ ['Community check-in','Post update or ask a question']
+];
+let state=JSON.parse(localStorage.getItem(KEY)||'{}');
+state.days=state.days||{};
+let selected=1;
+function save(){localStorage.setItem(KEY,JSON.stringify(state));render()}
+function render(){
+ const days=document.getElementById('days');days.innerHTML='';
+ for(let d=1;d<=7;d++){let b=document.createElement('button');b.textContent=d===7?'Day 7 · Rest':'Day '+d;b.className=d===selected?'active':'';b.onclick=()=>{selected=d;render()};days.appendChild(b)}
+ let total=0,done=0;
+ for(let d=1;d<=7;d++)for(let t=0;t<4;t++){total++;if(state.days[d]?.[t])done++}
+ document.getElementById('progressText').textContent=done+' of '+total+' daily checks complete';
+ document.getElementById('progressBar').style.width=(done/total*100)+'%';
+ document.getElementById('daySummary').textContent='Day '+selected+(selected===7?' · Rest day':' · '+(selected<=6?'Full-body workout day':''));
+ document.getElementById('checkTitle').textContent='Day '+selected+' checklist';
+ const checks=document.getElementById('checks');checks.innerHTML='';
+ tasks.forEach((task,i)=>{let row=document.createElement('label');row.className='task';let cb=document.createElement('input');cb.type='checkbox';cb.checked=!!state.days[selected]?.[i];cb.onchange=()=>{state.days[selected]=state.days[selected]||{};state.days[selected][i]=cb.checked;save()};let div=document.createElement('div');let strong=document.createElement('strong');strong.textContent=task[0];let small=document.createElement('small');small.textContent=(selected===7&&i===0?'Rest day — no workout scheduled':task[1]);div.append(strong,small);row.append(cb,div);checks.append(row)});
+}
+document.getElementById('baseDate').value=new Date().toISOString().slice(0,10);
+document.getElementById('saveBase').onclick=()=>{state.baseline={};['baseDate','weight','chest','waist','hips','arms'].forEach(id=>state.baseline[id]=document.getElementById(id).value);save();document.getElementById('baseStatus').textContent='Saved.'};
+if(state.baseline){Object.entries(state.baseline).forEach(([id,v])=>{let el=document.getElementById(id);if(el)el.value=v})}
+document.getElementById('export').onclick=()=>{let blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='fitness-tracker-backup.json';a.click();URL.revokeObjectURL(a.href)};
+document.getElementById('import').onchange=async e=>{try{state=JSON.parse(await e.target.files[0].text());save();alert('Backup imported.')}catch{alert('Could not read that backup file.')}};
+document.getElementById('reset').onclick=()=>{if(confirm('Delete all tracker data on this device? Export a backup first if needed.')){localStorage.removeItem(KEY);state={days:{}};save()}};
+render();
+if('serviceWorker' in navigator && location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
+</script>
+</body></html>
